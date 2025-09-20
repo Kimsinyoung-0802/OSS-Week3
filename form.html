@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Web page</title>
+    <style>
+        body { background: #f8f9fa; font-family: sans-serif; }
+        .container { width: 400px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #ddd; padding: 30px; }
+        h1 { text-align: center; }
+        .input-row { display: flex; gap: 8px; margin-bottom: 18px; }
+        .input-row input[type="text"] { flex: 1; padding: 8px; border-radius: 5px; border: 1px solid #bbb; font-size: 1em; }
+        .input-row button { padding: 8px 18px; font-size: 1em; border-radius: 5px; border: none; cursor: pointer; }
+        .add-btn { background: #1a3cff; color: #fff; }
+        .del-btn { background: #4e7d3a; color: #fff; }
+        ul { margin-top: 10px; }
+        li { margin: 6px 0; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dynamic Web page</h1>
+        <div class="input-row">
+            <input type="text" id="itemInput" placeholder="항목을 입력하세요">
+            <button class="add-btn" onclick="addItem()">추가</button>
+            <button class="del-btn" onclick="clearList()">삭제</button>
+        </div>
+        <ul id="itemList"></ul>
+    </div>
+    <script>
+        var inputBox = document.getElementById('itemInput');
+        inputBox.onkeydown = function(event) {
+            if (event.key === 'Enter') {
+                addItem();
+            }
+        };
+
+        function addItem() {
+            var input = document.getElementById('itemInput');
+            var list = document.getElementById('itemList');
+            var value = input.value;
+            value = value.trim();
+            if (value === "") {
+                alert('항목을 입력하세요!');
+                input.focus();
+                return;
+            }
+            var items = value.split(',');
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i].trim();
+                if (item !== "") {
+                    var li = document.createElement('li');
+                    li.textContent = item;
+                    list.appendChild(li);
+                }
+            }
+            input.value = "";
+            input.focus();
+        }
+
+        function clearList() {
+            var list = document.getElementById('itemList');
+            list.innerHTML = "";
+        }
+
+        window.onload = function() {
+            document.getElementById('itemInput').focus();
+        };
+    </script>
+</body>
+</html>
